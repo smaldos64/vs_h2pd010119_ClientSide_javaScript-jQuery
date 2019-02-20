@@ -1,0 +1,130 @@
+﻿<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>jQuery</title>
+    <script src="Scripts/jquery-3.3.1.js"></script>
+</head>
+
+<body>
+    <input id="txtFirstOperand" type="text" name="CaculatorTextField" value="1" />
+    <select id="SelectMathOperation">
+        <!--<option value="0">+</option>
+        <option value="1">-</option>
+        <option value="2">*</option>
+        <option value="3">/</option>-->
+    </select>
+    <input id="txtSecondOperand" type="text" name="CaculatorTextField" />
+
+    <br />
+    <br />
+    <input id="btnCalculate" type="button" value="Beregn" />
+    &nbsp;
+    <input id="btnClear" type="button" value="Clear" />
+    &nbsp;
+    <input id="btnClear1" type="button" value="Clear jQuery" />
+    <br />
+    <br />
+    Resultat :
+    &nbsp;
+    <input id="txtResult" type="text" disabled="disabled" name="CaculatorTextField" />
+
+    <p>Hej</p>
+    <p>med</p>
+    <p>dig</p>
+    <p>Bliver også gemt !!!</p>
+</body>
+
+</html>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        TextBoxArray = [];
+        //TextBoxArray1 = [];
+        var MathArray = [];
+
+        Counter = 0;
+        MathArray.push({
+            Operator: '+', OperatorValue: Counter++, MathOperation: function (a, b) { return a + b }
+        });
+
+        MathArray.push({
+            Operator: '-', OperatorValue: Counter++, MathOperation: function (a, b) { return a - b }
+        });
+
+        MathArray.push({
+            Operator: '*', OperatorValue: Counter++, MathOperation: function (a, b) { return a * b }
+        });
+
+        MathArray.push({
+            Operator: '/', OperatorValue: Counter++, MathOperation: function (a, b) { return a / b }
+        });
+
+        Counter = 0;
+        while (Counter < MathArray.length) {
+            var option = document.createElement("option");
+            option.value = MathArray[Counter].OperatorValue;
+            option.text = MathArray[Counter].Operator;
+            $("#SelectMathOperation").append(option)
+            Counter++;
+        }
+
+        //TextBoxTest = $("#txtFirstOperand");
+        //TextBoxArray1.push({ TextBoxId: $("#txtFirstOperand") });
+        //TextBoxArray1.push({ TextBoxId: $("#txtSecondOperand") });
+        //TextBoxArray1.push({ TextBoxId: $("#txtResult") });
+
+        TextBoxElements = document.getElementsByName("CaculatorTextField");
+        TextBoxArray = $.makeArray(TextBoxElements);
+
+        $("#btnClear").click(function () {
+            Counter = 0;
+            while (Counter < TextBoxArray.length) {
+                TextBoxArray[Counter].value = "";
+                Counter++;
+            }
+        });
+
+        $("#btnCalculate").click(function () {
+            value = parseInt($("#SelectMathOperation").val());
+            Counter = 0;
+            MathOperationFound = false;
+
+            while ((Counter < MathArray.length) && (false == MathOperationFound) ) {
+                if (MathArray[Counter].OperatorValue == value) {
+                    MathOperationFound = true;
+                    //$("#txtResult").val(MathArray[Counter].MathOperation(parseFloat($("#txtFirstOperand").val()), parseFloat($("#txtSecondOperand").val()).toString()));
+                    $("#txtResult").val(MathArray[Counter].MathOperation(parseFloat($("#txtFirstOperand").val()), parseFloat($("#txtSecondOperand").val())).toString());
+                }
+                else {
+                    Counter++;
+                }
+            }
+
+            if (false == MathOperationFound) {
+                alert("Der er noget galt i dit program ---> Spaghetti programmør !!!");
+            }
+        });
+
+        //$("#btnClear1").click(function () {
+        //    //$("TextBoxArray").each(function () {
+        //    //    $(this).val("");
+        //    //});
+        //    Counter = 0;
+        //    TextBoxArray[Counter].val("");
+        //    Counter++;
+        //});
+
+        //$("p").click(function () {
+        //    $(this).hide();
+        //});
+    });
+
+    //; (function($){
+    //    $("p").click(function () {
+    //        $(this).hide();
+    //    });
+    //})( $ );
+</script>

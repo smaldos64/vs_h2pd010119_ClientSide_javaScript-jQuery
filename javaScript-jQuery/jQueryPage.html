@@ -42,8 +42,7 @@
 <script type="text/javascript">
     $(document).ready(function () {
         TextBoxArray = [];
-        //TextBoxArray1 = [];
-        var MathArray = [];
+        MathArray = [];
 
         Counter = 0;
         MathArray.push({
@@ -71,11 +70,6 @@
             Counter++;
         }
 
-        //TextBoxTest = $("#txtFirstOperand");
-        //TextBoxArray1.push({ TextBoxId: $("#txtFirstOperand") });
-        //TextBoxArray1.push({ TextBoxId: $("#txtSecondOperand") });
-        //TextBoxArray1.push({ TextBoxId: $("#txtResult") });
-
         TextBoxElements = document.getElementsByName("CaculatorTextField");
         TextBoxArray = $.makeArray(TextBoxElements);
 
@@ -95,7 +89,6 @@
             while ((Counter < MathArray.length) && (false == MathOperationFound) ) {
                 if (MathArray[Counter].OperatorValue == value) {
                     MathOperationFound = true;
-                    //$("#txtResult").val(MathArray[Counter].MathOperation(parseFloat($("#txtFirstOperand").val()), parseFloat($("#txtSecondOperand").val()).toString()));
                     $("#txtResult").val(MathArray[Counter].MathOperation(parseFloat($("#txtFirstOperand").val()), parseFloat($("#txtSecondOperand").val())).toString());
                 }
                 else {
@@ -107,24 +100,7 @@
                 alert("Der er noget galt i dit program ---> Spaghetti programmør !!!");
             }
         });
-
-        //$("#btnClear1").click(function () {
-        //    //$("TextBoxArray").each(function () {
-        //    //    $(this).val("");
-        //    //});
-        //    Counter = 0;
-        //    TextBoxArray[Counter].val("");
-        //    Counter++;
-        //});
-
-        //$("p").click(function () {
-        //    $(this).hide();
-        //});
+      
     });
 
-    //; (function($){
-    //    $("p").click(function () {
-    //        $(this).hide();
-    //    });
-    //})( $ );
 </script>

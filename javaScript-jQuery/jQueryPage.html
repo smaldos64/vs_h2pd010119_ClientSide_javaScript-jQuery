@@ -9,58 +9,30 @@
 </head>
 
 <body>
-    <input id="txtFirstOperand" type="text" name="CaculatorTextField" value="1" />
+    <input id="txtFirstOperand" type="text"/>
+    
     <select id="SelectMathOperation">
-        <!--<option value="0">+</option>
-        <option value="1">-</option>
-        <option value="2">*</option>
-        <option value="3">/</option>-->
     </select>
-    <input id="txtSecondOperand" type="text" name="CaculatorTextField" />
+    
+    <input id="txtSecondOperand" type="text" />
 
     <br />
     <br />
     <input id="btnCalculate" type="button" value="Beregn" />
     &nbsp;
     <input id="btnClear" type="button" value="Clear" />
-    &nbsp;
-    <input id="btnClear1" type="button" value="Clear jQuery" />
     <br />
     <br />
     Resultat :
     &nbsp;
-    <input id="txtResult" type="text" disabled="disabled" name="CaculatorTextField" />
-
-    <p>Hej</p>
-    <p>med</p>
-    <p>dig</p>
-    <p>Bliver også gemt !!!</p>
+    <input id="txtResult" type="text" disabled="disabled" />
 </body>
 
 </html>
 
+<script src="ScriptFiles/Math.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
-        TextBoxArray = [];
-        MathArray = [];
-
-        Counter = 0;
-        MathArray.push({
-            Operator: '+', OperatorValue: Counter++, MathOperation: function (a, b) { return a + b }
-        });
-
-        MathArray.push({
-            Operator: '-', OperatorValue: Counter++, MathOperation: function (a, b) { return a - b }
-        });
-
-        MathArray.push({
-            Operator: '*', OperatorValue: Counter++, MathOperation: function (a, b) { return a * b }
-        });
-
-        MathArray.push({
-            Operator: '/', OperatorValue: Counter++, MathOperation: function (a, b) { return a / b }
-        });
-
         Counter = 0;
         while (Counter < MathArray.length) {
             var option = document.createElement("option");
@@ -70,35 +42,16 @@
             Counter++;
         }
 
-        TextBoxElements = document.getElementsByName("CaculatorTextField");
-        TextBoxArray = $.makeArray(TextBoxElements);
-
+        TextBoxElements = $(":input[type=text]");
+       
         $("#btnClear").click(function () {
-            Counter = 0;
-            while (Counter < TextBoxArray.length) {
-                TextBoxArray[Counter].value = "";
-                Counter++;
-            }
+            ClearTextBoxes(TextBoxElements);
         });
 
         $("#btnCalculate").click(function () {
-            value = parseInt($("#SelectMathOperation").val());
-            Counter = 0;
-            MathOperationFound = false;
-
-            while ((Counter < MathArray.length) && (false == MathOperationFound) ) {
-                if (MathArray[Counter].OperatorValue == value) {
-                    MathOperationFound = true;
-                    $("#txtResult").val(MathArray[Counter].MathOperation(parseFloat($("#txtFirstOperand").val()), parseFloat($("#txtSecondOperand").val())).toString());
-                }
-                else {
-                    Counter++;
-                }
-            }
-
-            if (false == MathOperationFound) {
-                alert("Der er noget galt i dit program ---> Spaghetti programmør !!!");
-            }
+            Value = parseInt($("#SelectMathOperation").val());
+            MathOperationResult = CalculateMathResult(Value, $("#txtFirstOperand").val(), $("#txtSecondOperand").val());
+            $("#txtResult").val(MathOperationResult);
         });
       
     });

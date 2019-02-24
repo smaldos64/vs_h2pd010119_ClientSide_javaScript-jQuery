@@ -7,14 +7,14 @@ var MathOperation_ENUM;
     MathOperation_ENUM[MathOperation_ENUM["Percentage_Operation"] = 4] = "Percentage_Operation";
 })(MathOperation_ENUM || (MathOperation_ENUM = {}));
 var MathOperation = /** @class */ (function () {
-    function MathOperation(ThisMathOperation, ThisMathOperationString, ThisMathDelegate) {
+    function MathOperation(params) {
         var _this = this;
         this.toString = function () {
             return "(" + (_this.ThisMathOperationResult + " " + _this.ThisMathOperationResult) + ")";
         };
-        this.ThisMathOperation = ThisMathOperation;
-        this.ThisMathOperationString = ThisMathOperationString;
-        this.ThisMathDelegate = ThisMathDelegate;
+        this.ThisMathOperation = params.ThisMathOperation;
+        this.ThisMathOperationString = params.ThisMathOperationString;
+        this.ThisMathDelegate = params.ThisMathDelegate;
     }
     MathOperation.prototype.PerformMathOperation = function (params) {
         this.ThisMathOperationResult = this.ThisMathDelegate({ Value1: params.Value1, Value2: params.Value2 });
@@ -31,8 +31,8 @@ function Subtract(params) {
 //let TypeScriptMathArray = [
 //    { new  MathOperation(ThisMathOperation: Add_Operation, )},
 //];
-var test = new MathOperation(MathOperation_ENUM.Add_Operation, "+", Add);
-var test1 = new MathOperation(MathOperation_ENUM.Subtract_Operation, "-", function (params) { return (params.Value1 - params.Value2); });
+var test = new MathOperation({ ThisMathOperation: MathOperation_ENUM.Add_Operation, ThisMathOperationString: "+", ThisMathDelegate: Add });
+var test1 = new MathOperation({ ThisMathOperation: MathOperation_ENUM.Subtract_Operation, ThisMathOperationString: "-", ThisMathDelegate: function (params) { return (params.Value1 - params.Value2); } });
 Add({ Value1: 3, Value2: 4 });
 Subtract({ Value1: 3, Value2: 4 });
 //const TypeScriptMathArray: Array<MathOperation> =

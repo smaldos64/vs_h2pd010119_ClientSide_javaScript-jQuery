@@ -25,6 +25,7 @@ class MathOperation {
         this.ThisMathOperation = params.ThisMathOperation;
         this.ThisMathOperationString = params.ThisMathOperationString;
         this.ThisMathDelegate = params.ThisMathDelegate;
+        this.ThisMathOperationResult = 0;
     }
 
     public PerformMathOperation(params: { Value1 : number, Value2 : number }) : string {
@@ -75,7 +76,8 @@ function TypeScriptCalculateMathResult(params : { MathOperation, Value1String: s
         if (TypeScriptMathArray[Counter].ThisMathOperation == params.MathOperation) {
             MathOperationFound = true;
             MathOperationIndex = Counter; 
-            return (TypeScriptMathArray[Counter].ThisMathDelegate({ Value1 : parseFloat(params.Value1String), Value2 : parseFloat(params.Value2String) }).toString());
+            return (TypeScriptMathArray[Counter].PerformMathOperation({ Value1: parseFloat(params.Value1String), Value2: parseFloat(params.Value2String) }).toString());
+            //return (TypeScriptMathArray[Counter].ThisMathDelegate({ Value1 : parseFloat(params.Value1String), Value2 : parseFloat(params.Value2String) }).toString());
         }
         else {
             Counter++;

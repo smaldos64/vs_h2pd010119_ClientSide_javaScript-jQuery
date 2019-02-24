@@ -21,29 +21,21 @@ var MathOperation = /** @class */ (function () {
     };
     return MathOperation;
 }());
-//type MathFunctionParams = { Value1: number, Value2: number }
 function Add(params) {
     return (params.Value1 + params.Value2);
 }
 function Subtract(params) {
     return (params.Value1 - params.Value2);
 }
-//let TypeScriptMathArray = [
-//    { new  MathOperation(ThisMathOperation: Add_Operation, )},
-//];
+var TypeScriptMathArray = [
+    new MathOperation({ ThisMathOperation: MathOperation_ENUM.Add_Operation, ThisMathOperationString: "+", ThisMathDelegate: Add }),
+    new MathOperation({ ThisMathOperation: MathOperation_ENUM.Subtract_Operation, ThisMathOperationString: "-", ThisMathDelegate: function (params) { return (params.Value1 - params.Value2); } }),
+    new MathOperation({ ThisMathOperation: MathOperation_ENUM.Multiply_Operation, ThisMathOperationString: "*", ThisMathDelegate: function (params) { return (params.Value1 * params.Value2); } }),
+    new MathOperation({ ThisMathOperation: MathOperation_ENUM.Divide_Operation, ThisMathOperationString: "/", ThisMathDelegate: function (params) { return (params.Value1 / params.Value2); } }),
+    new MathOperation({ ThisMathOperation: MathOperation_ENUM.Percentage_Operation, ThisMathOperationString: "%", ThisMathDelegate: function (params) { return (params.Value1 / params.Value2 * 100); } })
+];
 var test = new MathOperation({ ThisMathOperation: MathOperation_ENUM.Add_Operation, ThisMathOperationString: "+", ThisMathDelegate: Add });
 var test1 = new MathOperation({ ThisMathOperation: MathOperation_ENUM.Subtract_Operation, ThisMathOperationString: "-", ThisMathDelegate: function (params) { return (params.Value1 - params.Value2); } });
 Add({ Value1: 3, Value2: 4 });
 Subtract({ Value1: 3, Value2: 4 });
-//const TypeScriptMathArray: Array<MathOperation> =
-//{
-//    new MathOperation
-//}
-//const TypeScriptMathArray: MathOperation[] = new Array(5).fill('');
-//class PerformMathOperation {
-//    public PerformThisMathOperation: MathOperation;
-//    public toString = (): string => {
-//        return `(${this.CourseID + " / " + this.CourseName})`;
-//    }
-//}
 //# sourceMappingURL=Math_TypeScript.js.map

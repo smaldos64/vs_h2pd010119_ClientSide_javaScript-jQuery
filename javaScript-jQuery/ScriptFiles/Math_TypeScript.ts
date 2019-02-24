@@ -17,29 +17,29 @@ class MathOperation {
     public ThisMathOperationResult: number;
 
     constructor(params: {
-        ThisMathOperation: MathOperation_ENUM,
-        ThisMathOperationString: string,
-        ThisMathDelegate: MathDelegate} ) {
+        ThisMathOperation : MathOperation_ENUM,
+        ThisMathOperationString : string,
+        ThisMathDelegate : MathDelegate} ) {
         this.ThisMathOperation = params.ThisMathOperation;
         this.ThisMathOperationString = params.ThisMathOperationString;
         this.ThisMathDelegate = params.ThisMathDelegate;
     }
 
-    public PerformMathOperation(params: { Value1: number, Value2: number }) {
+    public PerformMathOperation(params: { Value1 : number, Value2 : number }) {
         this.ThisMathOperationResult = this.ThisMathDelegate({ Value1: params.Value1, Value2: params.Value2 });
     }
 
-    public toString = (): string => {
+    public toString = () : string => {
         return `(${this.ThisMathOperationResult + " " + this.ThisMathOperationResult})`;
     }
 }
 
 //type MathFunctionParams = { Value1: number, Value2: number }
-function Add(params: MathFunctionParams) {
+function Add(params: MathFunctionParams) : number{
     return (params.Value1 + params.Value2);
 }
 
-function Subtract(params: { Value1: number, Value2: number }) {
+function Subtract(params: { Value1 : number, Value2 : number }) : number {
     return (params.Value1 - params.Value2);
 }
 
@@ -47,11 +47,11 @@ function Subtract(params: { Value1: number, Value2: number }) {
 //    { new  MathOperation(ThisMathOperation: Add_Operation, )},
 //];
 
-let test = new MathOperation({ ThisMathOperation: MathOperation_ENUM.Add_Operation, ThisMathOperationString: "+", ThisMathDelegate: Add });
-let test1 = new MathOperation({ ThisMathOperation: MathOperation_ENUM.Subtract_Operation, ThisMathOperationString: "-", ThisMathDelegate: function(params: { Value1: number, Value2: number }) { return (params.Value1 - params.Value2) } });
+let test = new MathOperation({ ThisMathOperation : MathOperation_ENUM.Add_Operation, ThisMathOperationString : "+", ThisMathDelegate : Add });
+let test1 = new MathOperation({ ThisMathOperation : MathOperation_ENUM.Subtract_Operation, ThisMathOperationString : "-", ThisMathDelegate : function(params: { Value1: number, Value2: number }) { return (params.Value1 - params.Value2) } });
 
-Add({ Value1: 3, Value2: 4 });
-Subtract({ Value1: 3, Value2: 4 });
+Add({ Value1 : 3, Value2 : 4 });
+Subtract({ Value1 : 3, Value2 : 4 });
 
 //const TypeScriptMathArray: Array<MathOperation> =
 //{

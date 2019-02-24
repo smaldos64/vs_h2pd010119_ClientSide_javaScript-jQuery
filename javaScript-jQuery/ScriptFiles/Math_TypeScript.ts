@@ -10,6 +10,8 @@ type MathFunctionParams = { Value1: number, Value2: number }
 type MathDelegate = (params: MathFunctionParams) => number;
 type MathDelegateOld = (Value1: number, Value2: number) => number;
 
+let MathOperationIndex:number = -1;
+
 class MathOperation {
     public ThisMathOperation: MathOperation_ENUM;
     public ThisMathOperationString: string;
@@ -25,12 +27,13 @@ class MathOperation {
         this.ThisMathDelegate = params.ThisMathDelegate;
     }
 
-    public PerformMathOperation(params: { Value1 : number, Value2 : number }) {
+    public PerformMathOperation(params: { Value1 : number, Value2 : number }) : string {
         this.ThisMathOperationResult = this.ThisMathDelegate({ Value1: params.Value1, Value2: params.Value2 });
+        return (this.ThisMathOperationResult.toString());
     }
 
     public toString = () : string => {
-        return `(${this.ThisMathOperationResult + " " + this.ThisMathOperationResult})`;
+        return `(${this.ThisMathOperationResult})`;
     }
 }
 
@@ -50,9 +53,37 @@ let TypeScriptMathArray = [
     new MathOperation({ ThisMathOperation: MathOperation_ENUM.Percentage_Operation, ThisMathOperationString: "%", ThisMathDelegate: function (params: { Value1: number, Value2: number }) { return (params.Value1 / params.Value2 * 100) } })
 ];
 
-let test = new MathOperation({ ThisMathOperation : MathOperation_ENUM.Add_Operation, ThisMathOperationString : "+", ThisMathDelegate : Add });
-let test1 = new MathOperation({ ThisMathOperation : MathOperation_ENUM.Subtract_Operation, ThisMathOperationString : "-", ThisMathDelegate : function(params: { Value1: number, Value2: number }) { return (params.Value1 - params.Value2) } });
+//let test = new MathOperation({ ThisMathOperation : MathOperation_ENUM.Add_Operation, ThisMathOperationString : "+", ThisMathDelegate : Add });
+//let test1 = new MathOperation({ ThisMathOperation : MathOperation_ENUM.Subtract_Operation, ThisMathOperationString : "-", ThisMathDelegate : function(params: { Value1: number, Value2: number }) { return (params.Value1 - params.Value2) } });
 
-Add({ Value1 : 3, Value2 : 4 });
-Subtract({ Value1 : 3, Value2 : 4 });
+//Add({ Value1 : 3, Value2 : 4 });
+//Subtract({ Value1 : 3, Value2 : 4 });
+
+function TypeScriptClearTextBoxes(params: { TextBoxArray: HTMLInputElement[] } ) : void {
+    let Counter : number = 0;
+    while (Counter < params.TextBoxArray.length) {
+        params.TextBoxArray[Counter].value = "";
+        Counter++;
+    }
+}
+
+function TypeScriptCalculateMathResult(params : { MathOperation, Value1String: string, Value2String: string }) : string {
+    let Counter : number = 0;
+    let MathOperationFound : boolean = false;
+
+    while ((Counter < TypeScriptMathArray.length) && (false == MathOperationFound)) {
+        if (TypeScriptMathArray[Counter].ThisMathOperation == params.MathOperation) {
+            MathOperationFound = true;
+            MathOperationIndex = Counter; 
+            return (TypeScriptMathArray[Counter].ThisMathDelegate({ Value1 : parseFloat(params.Value1String), Value2 : parseFloat(params.Value2String) }).toString());
+        }
+        else {
+            Counter++;
+        }
+    }
+
+    if (false == MathOperationFound) {
+        alert("Der er noget galt i dit program ---> Spaghetti programmør !!!");
+    }
+}
 

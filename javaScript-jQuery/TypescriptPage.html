@@ -6,7 +6,6 @@
     <meta charset="utf-8" />
     <title>Typescript</title>
     <script src="Scripts/jquery-3.3.1.js"></script>
-    <script src="ScriptFiles/Math_TypeScript.js"></script>
 </head>
 
 <body>
@@ -21,23 +20,29 @@
     <input id="btnCalculate" type="button" value="Beregn" />
     &nbsp;
     <input id="btnClear" type="button" value="Clear" />
+
     <br />
     <br />
     Resultat :
     &nbsp;
     <input id="txtResult" type="text" disabled="disabled" />
+
+    <br />
+    Resultat :
+    &nbsp;
+    <input id="txtResultTypeScript" type="text" disabled="disabled" />
 </body>
 
 </html>
 
-<script src="ScriptFiles/Math.js"></script>
+<script src="ScriptFiles/Math_TypeScript.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
         Counter = 0;
-        while (Counter < MathArray.length) {
+        while (Counter < TypeScriptMathArray.length) {
             var option = document.createElement("option");
-            option.value = MathArray[Counter].OperatorValue;
-            option.text = MathArray[Counter].Operator;
+            option.value = TypeScriptMathArray[Counter].ThisMathOperation;
+            option.text = TypeScriptMathArray[Counter].ThisMathOperationString;
             $("#SelectMathOperation").append(option)
             Counter++;
         }
@@ -45,13 +50,15 @@
         TextBoxElements = $(":input[type=text]");
 
         $("#btnClear").click(function () {
-            ClearTextBoxes(TextBoxElements);
+            TypeScriptClearTextBoxes({ TextBoxArray : TextBoxElements });
         });
 
         $("#btnCalculate").click(function () {
             Value = parseInt($("#SelectMathOperation").val());
-            MathOperationResult = CalculateMathResult(Value, $("#txtFirstOperand").val(), $("#txtSecondOperand").val());
+            MathOperationResult = TypeScriptCalculateMathResult({ MathOperation : Value, Value1String : $("#txtFirstOperand").val(), Value2String : $("#txtSecondOperand").val() });
             $("#txtResult").val(MathOperationResult);
+
+            $("#txtResultTypeScript").val(TypeScriptMathArray[MathOperationIndex]);
         });
 
     });

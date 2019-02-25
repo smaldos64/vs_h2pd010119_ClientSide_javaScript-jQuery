@@ -13,10 +13,12 @@ type MathDelegateOld = (Value1: number, Value2: number) => number;
 let MathOperationIndex:number = -1;
 
 class MathOperation {
-    public ThisMathOperation: MathOperation_ENUM;
-    public ThisMathOperationString: string;
-    public ThisMathDelegate: MathDelegate;
-    public ThisMathOperationResult: number;
+    public ThisMathOperation : MathOperation_ENUM;
+    public ThisMathOperationString : string;
+    public ThisMathDelegate : MathDelegate;
+    public ThisMathOperationResult : number;
+    public ThisValue1 : number;
+    public ThisValue2 : number;
 
     constructor(params: {
         ThisMathOperation : MathOperation_ENUM,
@@ -25,11 +27,16 @@ class MathOperation {
         this.ThisMathOperation = params.ThisMathOperation;
         this.ThisMathOperationString = params.ThisMathOperationString;
         this.ThisMathDelegate = params.ThisMathDelegate;
+
         this.ThisMathOperationResult = 0;
+        this.ThisValue1 = 0;
+        this.ThisValue2 = 0;
     }
 
     public PerformMathOperation(params: { Value1 : number, Value2 : number }) : string {
         this.ThisMathOperationResult = this.ThisMathDelegate({ Value1: params.Value1, Value2: params.Value2 });
+        this.ThisValue1 = params.Value1;
+        this.ThisValue2 = params.Value2;
         return (this.ThisMathOperationResult.toString());
     }
 
@@ -87,5 +94,20 @@ function TypeScriptCalculateMathResult(params : { MathOperation, Value1String: s
     if (false == MathOperationFound) {
         alert("Der er noget galt i dit program ---> Spaghetti programmør !!!");
     }
+}
+
+function GetTemplateStringFromMathOperation(params: { MathOperation_Object : MathOperation}) : string {
+    let MathTemplateString: string = "";
+
+    MathTemplateString =
+        params.MathOperation_Object.ThisMathOperationString +
+        " : " +
+        params.MathOperation_Object.ThisValue1 +
+        params.MathOperation_Object.ThisMathOperationString +
+        params.MathOperation_Object.ThisValue2 +
+        " = " +
+        params.MathOperation_Object.ThisMathOperationResult;
+
+    return (MathTemplateString);
 }
 

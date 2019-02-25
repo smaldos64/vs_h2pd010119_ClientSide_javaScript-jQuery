@@ -17,9 +17,13 @@ var MathOperation = /** @class */ (function () {
         this.ThisMathOperationString = params.ThisMathOperationString;
         this.ThisMathDelegate = params.ThisMathDelegate;
         this.ThisMathOperationResult = 0;
+        this.ThisValue1 = 0;
+        this.ThisValue2 = 0;
     }
     MathOperation.prototype.PerformMathOperation = function (params) {
         this.ThisMathOperationResult = this.ThisMathDelegate({ Value1: params.Value1, Value2: params.Value2 });
+        this.ThisValue1 = params.Value1;
+        this.ThisValue2 = params.Value2;
         return (this.ThisMathOperationResult.toString());
     };
     return MathOperation;
@@ -65,5 +69,17 @@ function TypeScriptCalculateMathResult(params) {
     if (false == MathOperationFound) {
         alert("Der er noget galt i dit program ---> Spaghetti programmør !!!");
     }
+}
+function GetTemplateStringFromMathOperation(params) {
+    var MathTemplateString = "";
+    MathTemplateString =
+        params.MathOperation_Object.ThisMathOperationString +
+            " : " +
+            params.MathOperation_Object.ThisValue1 +
+            params.MathOperation_Object.ThisMathOperationString +
+            params.MathOperation_Object.ThisValue2 +
+            " = " +
+            params.MathOperation_Object.ThisMathOperationResult;
+    return (MathTemplateString);
 }
 //# sourceMappingURL=Math_TypeScript.js.map

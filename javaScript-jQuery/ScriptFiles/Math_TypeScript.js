@@ -114,4 +114,20 @@ function AddMathOperationToMathOperationStack(params) {
     }));
     return (MathOperationIndexNumberInList);
 }
+function DeleteTypeScriptMathOperationInList(params) {
+    var Counter = 0;
+    var MathOperationFound = false;
+    while ((Counter < MathOperationHistoryList.length) && (false == MathOperationFound)) {
+        if (MathOperationHistoryList[Counter].ThisIndexInList == params.IndexInArray) {
+            MathOperationFound = true;
+        }
+        else {
+            Counter++;
+        }
+    }
+    if (true == MathOperationFound) {
+        MathOperationHistoryList.splice(Counter, 1);
+    }
+    return (MathOperationFound);
+}
 //# sourceMappingURL=Math_TypeScript.js.map

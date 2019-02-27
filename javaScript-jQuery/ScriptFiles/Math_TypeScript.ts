@@ -131,3 +131,23 @@ function AddMathOperationToMathOperationStack(params: { MathOperation_Object: Ma
     return (MathOperationIndexNumberInList);
 }
 
+function DeleteTypeScriptMathOperationInList(params: { IndexInArray: number }): boolean {
+    let Counter: number = 0;
+    let MathOperationFound: boolean = false;
+
+    while ((Counter < MathOperationHistoryList.length) && (false == MathOperationFound)) {
+        if (MathOperationHistoryList[Counter].ThisIndexInList == params.IndexInArray) {
+            MathOperationFound = true;
+        }
+        else {
+            Counter++;
+        }
+    }
+
+    if (true == MathOperationFound) {
+        MathOperationHistoryList.splice(Counter, 1);
+    }
+
+    return (MathOperationFound);
+}
+

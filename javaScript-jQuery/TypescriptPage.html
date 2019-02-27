@@ -118,11 +118,11 @@
             //var Content = Template.replace(/{{MathOperationLine}}/ig, TemplateString);
 
             //$("#MathOperationsContent").append(Content);
+
             MathCalcalationIndex = AddMathOperationToMathOperationStack({ MathOperation_Object: TypeScriptMathArray[MathOperationIndex] });
             WorkString = "<tr class='MathOperationDataRow'>";
             WorkString += "<td>";
             WorkString += TypeScriptMathArray[MathOperationIndex].ThisValue1;
-            //WorkString += "<td class='EducationLineName'>";
             WorkString += "<td>";
             WorkString += TypeScriptMathArray[MathOperationIndex].ThisMathOperationString;
             WorkString += "<td>";
@@ -156,6 +156,18 @@
 
             UpdateAllMathOperationArea();
         });
+
+        $('body').on('click', '.' + MathOperationDataRowDelete, function () {
+            MathOperationID = $(this).val();
+            CurrentRow = $(this).closest("tr");
+
+            if (confirm("Ønsker du slette udregning " + MathOperationID + " ?")) {
+                if (DeleteTypeScriptMathOperationInList({ IndexInArray: MathOperationID })) {
+                    CurrentRow.remove();
+                }
+            }
+        });
+        
 
     });
 

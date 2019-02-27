@@ -1,3 +1,16 @@
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    }
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
 var MathOperation_ENUM;
 (function (MathOperation_ENUM) {
     MathOperation_ENUM[MathOperation_ENUM["Add_Operation"] = 0] = "Add_Operation";
@@ -7,6 +20,8 @@ var MathOperation_ENUM;
     MathOperation_ENUM[MathOperation_ENUM["Percentage_Operation"] = 4] = "Percentage_Operation";
 })(MathOperation_ENUM || (MathOperation_ENUM = {}));
 var MathOperationIndex = -1;
+var MathOperationIndexNumberInList = 0;
+var MathOperationHistoryList = [];
 var MathOperation = /** @class */ (function () {
     function MathOperation(params) {
         var _this = this;
@@ -28,6 +43,19 @@ var MathOperation = /** @class */ (function () {
     };
     return MathOperation;
 }());
+var MathOperationHistory = /** @class */ (function (_super) {
+    __extends(MathOperationHistory, _super);
+    function MathOperationHistory(params) {
+        var _this = _super.call(this, {
+            ThisMathOperation: params.MathOperation_Object.ThisMathOperation,
+            ThisMathOperationString: params.MathOperation_Object.ThisMathOperationString,
+            ThisMathDelegate: params.MathOperation_Object.ThisMathDelegate
+        }) || this;
+        _this.ThisIndexInList = params.ThisIndexInList;
+        return _this;
+    }
+    return MathOperationHistory;
+}(MathOperation));
 function Add(params) {
     return (params.Value1 + params.Value2);
 }
@@ -41,10 +69,6 @@ var TypeScriptMathArray = [
     new MathOperation({ ThisMathOperation: MathOperation_ENUM.Divide_Operation, ThisMathOperationString: "/", ThisMathDelegate: function (params) { return (params.Value1 / params.Value2); } }),
     new MathOperation({ ThisMathOperation: MathOperation_ENUM.Percentage_Operation, ThisMathOperationString: "%", ThisMathDelegate: function (params) { return (params.Value1 / params.Value2 * 100); } })
 ];
-//let test = new MathOperation({ ThisMathOperation : MathOperation_ENUM.Add_Operation, ThisMathOperationString : "+", ThisMathDelegate : Add });
-//let test1 = new MathOperation({ ThisMathOperation : MathOperation_ENUM.Subtract_Operation, ThisMathOperationString : "-", ThisMathDelegate : function(params: { Value1: number, Value2: number }) { return (params.Value1 - params.Value2) } });
-//Add({ Value1 : 3, Value2 : 4 });
-//Subtract({ Value1 : 3, Value2 : 4 });
 function TypeScriptClearTextBoxes(params) {
     var Counter = 0;
     while (Counter < params.TextBoxArray.length) {
@@ -81,5 +105,13 @@ function GetTemplateStringFromMathOperation(params) {
             " = " +
             params.MathOperation_Object.ThisMathOperationResult;
     return (MathTemplateString);
+}
+function AddMathOperationToMathOperationStack(params) {
+    MathOperationIndexNumberInList++;
+    MathOperationHistoryList.push(new MathOperationHistory({
+        MathOperation_Object: params.MathOperation_Object,
+        ThisIndexInList: MathOperationIndexNumberInList
+    }));
+    return (MathOperationIndexNumberInList);
 }
 //# sourceMappingURL=Math_TypeScript.js.map

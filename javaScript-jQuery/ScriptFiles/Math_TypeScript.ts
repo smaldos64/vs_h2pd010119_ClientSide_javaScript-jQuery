@@ -10,7 +10,9 @@ type MathFunctionParams = { Value1: number, Value2: number }
 type MathDelegate = (params: MathFunctionParams) => number;
 type MathDelegateOld = (Value1: number, Value2: number) => number;
 
-let MathOperationIndex:number = -1;
+let MathOperationIndex : number = -1;
+let MathOperationIndexNumberInList: number = 0;
+let MathOperationHistoryList = [];
 
 class MathOperation {
     public ThisMathOperation : MathOperation_ENUM;
@@ -45,6 +47,22 @@ class MathOperation {
     }
 }
 
+class MathOperationHistory extends MathOperation {
+    public ThisIndexInList: number;
+
+    constructor(params: {
+        MathOperation_Object : MathOperation,
+        ThisIndexInList : number
+    }) {
+        super({
+            ThisMathOperation: params.MathOperation_Object.ThisMathOperation,
+            ThisMathOperationString: params.MathOperation_Object.ThisMathOperationString,
+            ThisMathDelegate: params.MathOperation_Object.ThisMathDelegate
+        });
+        this.ThisIndexInList = params.ThisIndexInList;
+    }
+}
+
 function Add(params: MathFunctionParams) : number{
     return (params.Value1 + params.Value2);
 }
@@ -60,12 +78,6 @@ let TypeScriptMathArray = [
     new MathOperation({ ThisMathOperation: MathOperation_ENUM.Divide_Operation, ThisMathOperationString: "/", ThisMathDelegate: function (params: { Value1: number, Value2: number }) { return (params.Value1 / params.Value2) } }),
     new MathOperation({ ThisMathOperation: MathOperation_ENUM.Percentage_Operation, ThisMathOperationString: "%", ThisMathDelegate: function (params: { Value1: number, Value2: number }) { return (params.Value1 / params.Value2 * 100) } })
 ];
-
-//let test = new MathOperation({ ThisMathOperation : MathOperation_ENUM.Add_Operation, ThisMathOperationString : "+", ThisMathDelegate : Add });
-//let test1 = new MathOperation({ ThisMathOperation : MathOperation_ENUM.Subtract_Operation, ThisMathOperationString : "-", ThisMathDelegate : function(params: { Value1: number, Value2: number }) { return (params.Value1 - params.Value2) } });
-
-//Add({ Value1 : 3, Value2 : 4 });
-//Subtract({ Value1 : 3, Value2 : 4 });
 
 function TypeScriptClearTextBoxes(params: { TextBoxArray: HTMLInputElement[] } ) : void {
     let Counter : number = 0;
@@ -109,5 +121,13 @@ function GetTemplateStringFromMathOperation(params: { MathOperation_Object : Mat
         params.MathOperation_Object.ThisMathOperationResult;
 
     return (MathTemplateString);
+}
+
+function AddMathOperationToMathOperationStack(params: { MathOperation_Object: MathOperation }) : number {
+    MathOperationIndexNumberInList++;
+    MathOperationHistoryList.push(new MathOperationHistory({
+        MathOperation_Object: params.MathOperation_Object,
+        ThisIndexInList: MathOperationIndexNumberInList}));
+    return (MathOperationIndexNumberInList);
 }
 

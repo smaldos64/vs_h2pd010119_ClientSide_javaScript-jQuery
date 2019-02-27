@@ -6,6 +6,8 @@
     <meta charset="utf-8" />
     <title>Typescript</title>
     <script src="Scripts/jquery-3.3.1.js"></script>
+    <script src="Scripts/bootstrap.js"></script>
+    <link href="Content/bootstrap.css" rel="stylesheet" />
 </head>
 
 <body>
@@ -47,7 +49,20 @@
     <br />
     <br />
     <div id="MathOperationsContent">
-
+        <table id="tblDynamic" class="table table-bordered">
+            <thead>
+                <tr>
+                    <td>Tal1</td>
+                    <td>Operation</td>
+                    <td>Tal2</td>
+                    <td>Lig Med</td>
+                    <td>Resultat</td>
+                    <td>Til Display</td>
+                    <td>Slet</td>
+                </tr>
+            </thead>
+            <tbody class="MathOperationData"></tbody>
+        </table>
     </div>
 
     <script id="scriptMathOperations" type="app/template">
@@ -62,7 +77,10 @@
 <script src="ScriptFiles/Math_TypeScript.js" type="text/javascript"></script>
 <script type="text/javascript">
     $(document).ready(function () {
+        var MathOperationDataRowLook = "LookMathOperation";
+        var MathOperationDataRowDelete = "DeleteMathOperation";
         Counter = 0;
+
         while (Counter < TypeScriptMathArray.length) {
             var option = document.createElement("option");
             option.value = TypeScriptMathArray[Counter].ThisMathOperation;
@@ -95,11 +113,36 @@
 
         function UpdateAllMathOperationArea()
         {
-            var Template = $("#scriptMathOperations").html().trim();
-            var TemplateString = GetTemplateStringFromMathOperation({ MathOperation_Object: TypeScriptMathArray[MathOperationIndex] });
-            var Content = Template.replace(/{{MathOperationLine}}/ig, TemplateString);
+            //var Template = $("#scriptMathOperations").html().trim();
+            //var TemplateString = GetTemplateStringFromMathOperation({ MathOperation_Object: TypeScriptMathArray[MathOperationIndex] });
+            //var Content = Template.replace(/{{MathOperationLine}}/ig, TemplateString);
 
-            $("#MathOperationsContent").append(Content);
+            //$("#MathOperationsContent").append(Content);
+            MathCalcalationIndex = AddMathOperationToMathOperationStack({ MathOperation_Object: TypeScriptMathArray[MathOperationIndex] });
+            WorkString = "<tr class='MathOperationDataRow'>";
+            WorkString += "<td>";
+            WorkString += TypeScriptMathArray[MathOperationIndex].ThisValue1;
+            //WorkString += "<td class='EducationLineName'>";
+            WorkString += "<td>";
+            WorkString += TypeScriptMathArray[MathOperationIndex].ThisMathOperationString;
+            WorkString += "<td>";
+            WorkString += TypeScriptMathArray[MathOperationIndex].ThisValue2;
+            WorkString += "<td>";
+            WorkString += " = ";
+            WorkString += "<td>";
+            WorkString += TypeScriptMathArray[MathOperationIndex].ThisMathOperationResult;
+            WorkString += "<td>";
+            WorkString += "<button type='button'";
+            WorkString += "value='" + MathCalcalationIndex + "' ";
+            WorkString += "class='" + MathOperationDataRowLook + "'";
+            WorkString += ">Se Udregning (" + MathCalcalationIndex + ") </button>";
+            WorkString += "<td>";
+            WorkString += "<button type='button'";
+            WorkString += "value='" + MathCalcalationIndex + "' ";
+            WorkString += "class='" + MathOperationDataRowDelete + "'";
+            WorkString += ">Slet Udregning (" + MathCalcalationIndex + ") </button>";
+            WorkString += "</tr>";
+            $(".MathOperationData").append(WorkString);
         }
 
         $("#btnCalculate").click(function () {

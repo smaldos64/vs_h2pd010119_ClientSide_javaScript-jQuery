@@ -127,27 +127,70 @@ function AddMathOperationToMathOperationStack(params: { MathOperation_Object: Ma
     MathOperationIndexNumberInList++;
     MathOperationHistoryList.push(new MathOperationHistory({
         MathOperation_Object: params.MathOperation_Object,
-        ThisIndexInList: MathOperationIndexNumberInList}));
+        ThisIndexInList: MathOperationIndexNumberInList
+    }));
+    MathOperationHistoryList[MathOperationHistoryList.length - 1].ThisValue1 =
+        params.MathOperation_Object.ThisValue1;
+    MathOperationHistoryList[MathOperationHistoryList.length - 1].ThisValue2 =
+        params.MathOperation_Object.ThisValue2;
+    MathOperationHistoryList[MathOperationHistoryList.length - 1].ThisMathOperationResult =
+        params.MathOperation_Object.ThisMathOperationResult;
+    
     return (MathOperationIndexNumberInList);
 }
 
-function DeleteTypeScriptMathOperationInList(params: { IndexInArray: number }): boolean {
+function FindIndexInMathOperationList(params: { IndexInArray: number }): number {
     let Counter: number = 0;
-    let MathOperationFound: boolean = false;
 
-    while ((Counter < MathOperationHistoryList.length) && (false == MathOperationFound)) {
+    while (Counter < MathOperationHistoryList.length) {
         if (MathOperationHistoryList[Counter].ThisIndexInList == params.IndexInArray) {
-            MathOperationFound = true;
+            return (Counter);
         }
         else {
             Counter++;
         }
     }
 
-    if (true == MathOperationFound) {
+    return (-1);
+}
+
+function DeleteTypeScriptMathOperationInList(params: { IndexInArray: number }): boolean {
+    let Counter: number = -1;
+    //let MathOperationFound: boolean = false;
+
+    //while ((Counter < MathOperationHistoryList.length) && (false == MathOperationFound)) {
+    //    if (MathOperationHistoryList[Counter].ThisIndexInList == params.IndexInArray) {
+    //        MathOperationFound = true;
+    //    }
+    //    else {
+    //        Counter++;
+    //    }
+    //}
+
+    //if (true == MathOperationFound) {
+    Counter = FindIndexInMathOperationList({ IndexInArray: params.IndexInArray });
+    if (Counter >= 0) {
         MathOperationHistoryList.splice(Counter, 1);
+        return (true);
     }
 
-    return (MathOperationFound);
+    return (false);
+}
+
+function GetMathOperationInStack(params: { IndexInArray: number }): MathOperationHistory {
+    let Counter: number = -1;
+
+    Counter = FindIndexInMathOperationList({ IndexInArray: params.IndexInArray });
+
+    if (Counter >= 0) {
+        return (MathOperationHistoryList[Counter]);
+    }
+    else {
+        return (null);
+    }
+}
+
+function GetNumberOfMathOperationsInStack(): number {
+    return (MathOperationHistoryList.length);
 }
 

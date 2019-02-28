@@ -8,6 +8,7 @@
     <script src="Scripts/jquery-3.3.1.js"></script>
     <script src="Scripts/bootstrap.js"></script>
     <link href="Content/bootstrap.css" rel="stylesheet" />
+    <link href="StyleSheet/StyleSheet.css" rel="stylesheet" />
 </head>
 
 <body>
@@ -65,6 +66,11 @@
         </table>
     </div>
 
+    <br />
+    <div id="NumberOfMathOperationsInStack">
+        <label for="NumberMathOperationsInStack" id="lblNumberMathOperationsInStack"></label>
+    </div>
+
     <script id="scriptMathOperations" type="app/template">
         <div class="StoredMathOperations">
             <span>{{MathOperationLine}}</span>
@@ -83,7 +89,7 @@
 
         while (Counter < TypeScriptMathArray.length) {
             var option = document.createElement("option");
-            option.value = TypeScriptMathArray[Counter].ThisMathOperation;
+            option.value = parseInt(TypeScriptMathArray[Counter].ThisMathOperation);
             option.text = TypeScriptMathArray[Counter].ThisMathOperationString;
             $("#SelectMathOperation").append(option)
             Counter++;
@@ -92,6 +98,9 @@
         $("#lblNumberMathOperations").html("Sidste operation på de " + TypeScriptMathArray.length.toString() + " forskellige regne operationer");
         $("#TxtAreaMathOperations").attr("rows", TypeScriptMathArray.length);
         UpdateLastMathOperationTextArea();
+
+        GetNumberOfMathOerationsInStack();
+        //$("#lblNumberMathOperationsInStack").html("Antal beregninger i Stak : " + GetNumberOfMathOperationsInStack());
 
         TextBoxElements = $(":input[type=text]");
 
@@ -143,6 +152,8 @@
             WorkString += ">Slet Udregning (" + MathCalcalationIndex + ") </button>";
             WorkString += "</tr>";
             $(".MathOperationData").append(WorkString);
+
+            GetNumberOfMathOerationsInStack();
         }
 
         $("#btnCalculate").click(function () {
@@ -164,9 +175,37 @@
             if (confirm("Ønsker du slette udregning " + MathOperationID + " ?")) {
                 if (DeleteTypeScriptMathOperationInList({ IndexInArray: MathOperationID })) {
                     CurrentRow.remove();
+                    GetNumberOfMathOerationsInStack();
                 }
             }
         });
+
+        $('body').on('click', '.' + MathOperationDataRowLook, function () {
+            MathOperationID = $(this).val();
+
+            MathOperationHistory_object = GetMathOperationInStack({ IndexInArray: MathOperationID });
+
+            if (null != MathOperationHistory_object);
+            {
+                $("#txtFirstOperand").val(MathOperationHistory_object.ThisValue1);
+                $("#txtSecondOperand").val(MathOperationHistory_object.ThisValue2);
+                $("#txtResult").val(MathOperationHistory_object.ThisMathOperationResult);
+                $("#txtResultTypeScript").val(MathOperationHistory_object.ThisMathOperationResult);
+
+                $("#SelectMathOperation option").each(function () {
+                    if ($(this).val() == MathOperationHistory_object.ThisMathOperation) {
+                        $("#SelectMathOperation").val($(this).val());
+                        //$("#SelectMathOperation select").val(MathOperationHistory_object.ThisMathOperation);
+                    }
+                })
+            }
+        });
+
+
+        GetMathOperationInStack
+        function GetNumberOfMathOerationsInStack() {
+            $("#lblNumberMathOperationsInStack").html("Antal beregninger i Stak : " + GetNumberOfMathOperationsInStack());
+        }
         
 
     });

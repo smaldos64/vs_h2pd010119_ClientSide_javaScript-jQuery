@@ -21,6 +21,14 @@ MathArray.push({
     Operator: '%', OperatorValue: Counter++, MathOperation: function (a, b) { return a / b * 100 }
 });
 
+MathArray.push({
+    Operator: 'And', OperatorValue: Counter++, MathOperation: function (a, b) { return a & b}
+});
+
+MathArray.push({
+    Operator: 'Or', OperatorValue: Counter++, MathOperation: function (a, b) { return a | b }
+});
+
 function ClearTextBoxes(TextBoxArray) {
     Counter = 0;
     while (Counter < TextBoxArray.length) {

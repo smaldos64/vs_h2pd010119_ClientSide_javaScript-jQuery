@@ -91,7 +91,7 @@
             var option = document.createElement("option");
             option.value = parseInt(TypeScriptMathArray[Counter].ThisMathOperation);
             option.text = TypeScriptMathArray[Counter].ThisMathOperationString;
-            $("#SelectMathOperation").append(option)
+            $("#SelectMathOperation").append(option);
             Counter++;
         }
 
@@ -100,8 +100,7 @@
         UpdateLastMathOperationTextArea();
 
         GetNumberOfMathOerationsInStack();
-        //$("#lblNumberMathOperationsInStack").html("Antal beregninger i Stak : " + GetNumberOfMathOperationsInStack());
-
+      
         TextBoxElements = $(":input[type=text]");
 
         $("#btnClear").click(function () {
@@ -122,12 +121,6 @@
 
         function UpdateAllMathOperationArea()
         {
-            //var Template = $("#scriptMathOperations").html().trim();
-            //var TemplateString = GetTemplateStringFromMathOperation({ MathOperation_Object: TypeScriptMathArray[MathOperationIndex] });
-            //var Content = Template.replace(/{{MathOperationLine}}/ig, TemplateString);
-
-            //$("#MathOperationsContent").append(Content);
-
             MathCalcalationIndex = AddMathOperationToMathOperationStack({ MathOperation_Object: TypeScriptMathArray[MathOperationIndex] });
             WorkString = "<tr class='MathOperationDataRow'>";
             WorkString += "<td>";
@@ -195,19 +188,15 @@
                 $("#SelectMathOperation option").each(function () {
                     if ($(this).val() == MathOperationHistory_object.ThisMathOperation) {
                         $("#SelectMathOperation").val($(this).val());
-                        //$("#SelectMathOperation select").val(MathOperationHistory_object.ThisMathOperation);
                     }
                 })
             }
         });
 
-
-        GetMathOperationInStack
         function GetNumberOfMathOerationsInStack() {
             $("#lblNumberMathOperationsInStack").html("Antal beregninger i Stak : " + GetNumberOfMathOperationsInStack());
         }
-        
-
+ 
     });
 
 </script>

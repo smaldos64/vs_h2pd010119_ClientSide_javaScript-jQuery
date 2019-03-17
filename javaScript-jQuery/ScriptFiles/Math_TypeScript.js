@@ -134,16 +134,6 @@ function FindIndexInMathOperationList(params) {
 }
 function DeleteTypeScriptMathOperationInList(params) {
     var Counter = -1;
-    //let MathOperationFound: boolean = false;
-    //while ((Counter < MathOperationHistoryList.length) && (false == MathOperationFound)) {
-    //    if (MathOperationHistoryList[Counter].ThisIndexInList == params.IndexInArray) {
-    //        MathOperationFound = true;
-    //    }
-    //    else {
-    //        Counter++;
-    //    }
-    //}
-    //if (true == MathOperationFound) {
     Counter = FindIndexInMathOperationList({ IndexInArray: params.IndexInArray });
     if (Counter >= 0) {
         MathOperationHistoryList.splice(Counter, 1);
